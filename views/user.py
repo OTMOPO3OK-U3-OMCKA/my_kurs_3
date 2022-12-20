@@ -10,6 +10,7 @@ user_schema = UserSchema()
 
 @user_ns.route("/")
 class UserView(Resource):
+    @auth_service.auth_check_token
     def get(self):
         data = user_service.get_my_email()
         if data is None:
