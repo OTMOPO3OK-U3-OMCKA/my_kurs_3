@@ -30,10 +30,6 @@ class MoviesView(Resource):
 
 @movie_ns.route('/<int:bid>')
 class MovieView(Resource):
-    def get(self, bid):
-        b = movie_service.get_my_email()
-        sm_d = MovieSchema().dump(b)
-        return sm_d, 200
 
     def put(self, bid):
         req_json = request.json
