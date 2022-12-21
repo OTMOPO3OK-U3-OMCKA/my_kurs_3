@@ -46,7 +46,7 @@ def mov():
 
 
 dd = [({"status": "new", "page": "1"}, 3),
-      ({"status": "new"}, 4),
+      ({"status": "new"}, 21),
       ({"page": "3"}, 3),
       ({"status": 2, "page": 1}, 3),
       (None, 3)]

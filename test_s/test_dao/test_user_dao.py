@@ -33,6 +33,7 @@ def dao_user_if_get_email_return_none():
     dao_user = UserDAO(None)
     dao_user.get_email = MagicMock(return_value=None)
     dao_user.get_genre = MagicMock(return_value=None)
+    dao_user.register = MagicMock(return_value="000")
 
     return dao_user
 
@@ -83,7 +84,7 @@ class TestUserDao:
         assert type(test_hash) == bytes
 
     def test_user_register(self):
-        assert self.dao_user_if_get_email_return_none.register(1, "2", 3, 4) is False
+        assert self.dao_user_if_get_email_return_none.register(1, "2", 3, 4) is True
         assert self.user_service.register(1, "2", 3, 4) is False
         assert self.register.register(1, "rt356", "3", 4) is True
 
