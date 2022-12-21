@@ -27,7 +27,6 @@ class AuthService:
                 abort(400)
 
         data = {
-            "name": user.name,
             "email": user.email
         }
         mins30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)

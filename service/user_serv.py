@@ -34,8 +34,6 @@ class UserService:
         if self.get_email(email) is None:
             hash_password = self.get_hash(password)
             favorite_genre = self.get_genre(genre)
-            if favorite_genre is None:
-                return False
             self.dao.register(email, hash_password, name, favorite_genre)
             return True
         return False

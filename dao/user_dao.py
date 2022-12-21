@@ -19,6 +19,8 @@ class UserDAO:
 
     def get_genre(self, genre):
         data = self.session.query(Genre).filter(Genre.name == genre).first()
+        if data is None:
+            return None
         return data.id
 
     def updater(self, email, data):

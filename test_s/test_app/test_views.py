@@ -6,6 +6,7 @@ from dao.model.genre import Genre
 from dao.model.movie import Movie
 from dao.user_dao import UserDAO
 from service.user_serv import UserService
+from service.movie_serv import MovieService
 from unittest.mock import MagicMock
 from views.user import request
 import responses
@@ -37,6 +38,12 @@ def serv():
     serv.get_my_email = MagicMock(return_value=u)
     return serv
 
+@pytest.fixture
+def mov():
+    mov = MovieService(None)
+    m = Movie(title="oo")
+    return mov
+
 
 dd = [({"status": "new", "page": "1"}, 3),
       ({"status": "new"}, 4),
@@ -46,8 +53,9 @@ dd = [({"status": "new", "page": "1"}, 3),
 
 class TestApi:
     @pytest.fixture(autouse=True)
-    def est_a(self, serv):
+    def est_a(self, serv, mov):
         self.serv = serv
+        serv.mov = mov
 
     @pytest.mark.skip()
     def test_api(self, est_a):
@@ -75,7 +83,7 @@ class TestApi:
         else:
             assert len(re.json) != len_json
 
-    @pytest.mark.skip()
+
     def test_views_post_movies(self):
         data = {"title": "oo"}
         re = app.test_client().post('/movies/', json=data, follow_redirects=True)
@@ -85,9 +93,9 @@ class TestApi:
 
     def test_views_put_movies_id(self):
         data = {"id": 22, "title": "rrr"}
-        re = app.test_client().put('/movies/', json=data, follow_redirects=True)
-        assert re.status_code == 200
+        re = app.test_client().put('/movies/22', json=data, follow_redirects=True)
+        assert re.status_code == 204
 
     def test_views_delete_movies_id(self):
-        re = app.test_client().delete('/movies/22/', query_string="22")
+        re = app.test_client().delete('/movies/22', query_string="22")
         assert re.status_code == 204

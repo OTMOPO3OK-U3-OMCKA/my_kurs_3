@@ -15,7 +15,7 @@ class RegisterView(Resource):
         name = data.get("name")
         favorite_genre = data.get("favorite_genre")
 
-        if None not in [email, password, name, favorite_genre]:
+        if None not in [email, password]:
             if user_service.register(email, password, name, favorite_genre):
                 return 'пользователь зарегистрирован', 201
         return 'пользователь существует или ввели не верно данные', 400

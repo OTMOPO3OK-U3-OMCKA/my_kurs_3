@@ -1,11 +1,10 @@
 from dao.model.movie import Movie
-from datetime import datetime
+from sqlalchemy import desc
 
 
 class MovieDAO:
     def __init__(self, session):
         self.session = session
-        self.year = datetime.now().year
         self.v = 3
 
     def get_one(self, bid):
@@ -15,11 +14,11 @@ class MovieDAO:
         return self.session.query(Movie).all()
 
     def get_by_status(self):
-        return self.session.query(Movie).filter(Movie.year >= (self.year - self.v)).all()
+        return self.session.query(Movie).order_by(desc(Movie.year)).all()
 
     def get_by_satus_page(self, page):
         pg = self.v * (int(page) - 1)
-        return self.session.query(Movie).filter(Movie.year >= (self.year - self.v)).limit(self.v).offset(pg)
+        return self.session.query(Movie).order_by(desc(Movie.year)).limit(self.v).offset(pg)
 
     def get_by_page(self, page):
         pg = self.v * (int(page) - 1)
